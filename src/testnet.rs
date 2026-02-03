@@ -60,11 +60,10 @@ pub fn run_instance(url: String, use_mainnet: bool, wasm: Vec<u8>, method: Strin
         let target_canister_id = response.unwrap();
         println!("canister id {}", target_canister_id);
 
-        let mut chunks = wasm.chunks(900_000);
-
+        let chunks = wasm.chunks(900_000);
         let mut hash_fut = FuturesOrdered::new();
 
-        while let Some(chunk) = chunks.next() {
+        for chunk in chunks {
             let result = agent
                 .update(&management_canister_id, "upload_chunk")
                 .with_effective_canister_id(effective_canister_id)

@@ -1,5 +1,12 @@
 use clap::{Parser, ValueEnum};
+use ic_canister_sandbox_backend_lib::{
+    RUN_AS_CANISTER_SANDBOX_FLAG, RUN_AS_COMPILER_SANDBOX_FLAG, RUN_AS_SANDBOX_LAUNCHER_FLAG,
+    SANDBOX_MAGIC_BYTES, canister_sandbox_main, compiler_sandbox::compiler_sandbox_main,
+    embed_sandbox_signature, launcher::sandbox_launcher_main,
+};
 use std::path::PathBuf;
+
+embed_sandbox_signature!();
 
 #[derive(Parser)]
 #[command(version, about, long_about = None)]
@@ -33,7 +40,7 @@ enum InstanceType {
     Testnet,
 }
 
-fn main() {
+fn cli_main() {
     let cli = Cli::parse();
 
     let wasm_bytes = match wat::parse_file(&cli.wat_file) {
@@ -61,5 +68,18 @@ fn main() {
             let use_mainnet = false;
             wrun::testnet::run_instance(url, use_mainnet, wasm_bytes, cli.method);
         }
+    }
+}
+
+// Sandbox shim for execution environment
+fn main() {
+    if std::env::args().any(|arg| arg == RUN_AS_CANISTER_SANDBOX_FLAG) {
+        canister_sandbox_main();
+    } else if std::env::args().any(|arg| arg == RUN_AS_SANDBOX_LAUNCHER_FLAG) {
+        sandbox_launcher_main();
+    } else if std::env::args().any(|arg| arg == RUN_AS_COMPILER_SANDBOX_FLAG) {
+        compiler_sandbox_main();
+    } else {
+        cli_main();
     }
 }
