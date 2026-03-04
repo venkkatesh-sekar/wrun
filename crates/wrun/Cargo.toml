@@ -1,0 +1,27 @@
+[package]
+name = "wrun"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+ic-config = { workspace = true }
+ic-embedders = { workspace = true }
+ic-test-utilities = { workspace = true }
+ic-test-utilities-embedders = { workspace = true }
+ic-test-utilities-types = { workspace = true }
+ic-types = { workspace = true }
+ic-test-utilities-execution-environment = { workspace = true }
+ic-canister-sandbox-backend-lib = { workspace = true }
+ic-agent = { workspace = true }
+ic-cdk = { workspace = true }
+ic-management-canister-types = { workspace = true }
+pocket-ic = { workspace = true }
+wasmtime = { workspace = true }
+candid = { workspace = true }
+futures = { workspace = true }
+serde = { workspace = true }
+sha2 = { workspace = true }
+tokio = { workspace = true }
+wirm = { workspace = true }
+clap = { workspace = true }
+wat = { workspace = true }

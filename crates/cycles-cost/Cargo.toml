@@ -1,0 +1,13 @@
+[package]
+name = "cycles-cost"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+ic-config = { workspace = true }
+ic-cycles-account-manager = { workspace = true }
+ic-registry-subnet-type = { workspace = true }
+ic-replicated-state = { workspace = true }
+ic-types = { workspace = true }
+serde_json = { workspace = true }
+ureq = { workspace = true }
